@@ -109,7 +109,42 @@ app.delete("/ld/:id", (req, res) => {
 
 })
 
+const testAPI = async () => {
+    try {
+        const resALL = (await axios.get("http://localhost:3000/ld")).data
+        console.log("GET resALL ", resALL)
 
+        const resID = (await axios.get("http://localhost:3000/ld/1")).data
+        console.log("GET id ", resID)
+
+        const resPOST = (await axios.post("http://localhost:3000/ld", {
+            filmName: "MOMO",
+            rotationType: "cav",
+            region: "CH",
+            lengthMinutes: 2344,
+            videoFormat: "ntsc"
+        })).data
+
+        console.log("POST ", resPOST)
+
+        const resDelete = (await axios.delete("http://localhost:3000/ld/1")).data
+        console.log("DELETE ", resDelete)
+
+
+    } catch (err) {
+        if (axios.isAxiosError(err)) {
+            console.log("Error en la peticion", err.message)
+
+        }
+        else {
+            console.log("error general", err)
+        }
+    }
+}
+
+
+
+setTimeout(() => { testAPI() }, 1000)
 
 
 
