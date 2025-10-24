@@ -111,23 +111,30 @@ app.delete("/ld/:id", (req, res) => {
 
 const testAPI = async () => {
     try {
-        const resALL = (await axios.get<LD[]>("http://localhost:3000/ld")).data
+
+        
+
+        const resALL = (await axios.get<LD[]>(`http://localhost:3000/ld`)).data
         console.log("GET resALL ", resALL)
 
-        const resID = (await axios.get<LD>("http://localhost:3000/ld/1")).data
-        console.log("GET id ", resID)
-
-        const resPOST = (await axios.post<LD[]>("http://localhost:3000/ld", {
-            filmName: "MOMO",
+        const resPOST = (await axios.post<LD[]>(`http://localhost:3000/ld`, {
+            filmName: "El payaso de IT",
             rotationType: "cav",
-            region: "CH",
-            lengthMinutes: 2344,
-            videoFormat: "ntsc"
+            region: "UK",
+            lengthMinutes: 200,
+            videoFormat: "pal"
         })).data
 
         console.log("POST ", resPOST)
 
-        const resDelete = (await axios.delete<LD[]>("http://localhost:3000/ld/1")).data
+        const ultimoId = lds.at(lds.length -1)?.id
+
+        const resID=(await axios.get(`http://localhost:3000/ld/${ultimoId}`)).data
+        console.log("EL NUEVO LD POR ID ", resID)
+
+        
+
+        const resDelete = (await axios.delete<LD[]>(`http://localhost:3000/ld/${ultimoId}`)).data
         console.log("DELETE ", resDelete)
 
 
